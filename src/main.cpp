@@ -4,7 +4,7 @@
 #include "Instrument.h"
 #include "Control.h"
 #include "Effect.h"
-#include "Sensor.h"
+//#include "Sensor.h"
 
 USBMIDI_Interface midi;
 
@@ -89,13 +89,13 @@ void setup() {
     // Init light
     light.begin();
     // Sensor
-    sensor.begin();
+    //sensor.begin();
     // Whammy and softpot
     for (auto &whammy : whammys) whammy.map(boundaries<500, 700, 8192, 0>);
     for (auto &softpot : softpots) softpot.map(boundaries<5350, 10000, 8192, 16384>);
     // Set velocity
-    std::apply([](auto&... key){ (key.setVelocity(100), ...); }, head.keys);
-    std::apply([](auto&... key){ (key.setVelocity(127), ...); }, body.keys);
+    std::apply([](auto&... key){ (key.setVelocity(99), ...); }, head.keys);
+    std::apply([](auto&... key){ (key.setVelocity(99), ...); }, body.keys);
     // Init display
     display.attachInstrument(head);
     display.attachInstrument(body);
@@ -109,16 +109,16 @@ void loop() {
     light.idle();
 
     // Sensor
-    sensor.update();
-    Serial.print("Pitch (X) : ");
-    Serial.print(sensor.getPitch(), 2);
-    Serial.print(" deg | Accel X : ");
-    Serial.print(sensor.getAccelX(), 2);
-    Serial.println(" m/s²");
-    Serial.print(" deg | Accel Y : ");
-    Serial.print(sensor.getAccelY(), 2);
-    Serial.println(" m/s²");
-    Serial.print(" deg | Accel Z : ");
-    Serial.print(sensor.getAccelZ(), 2);
-    Serial.println(" m/s²");
+    // sensor.update();
+    // Serial.print("Pitch (X) : ");
+    // Serial.print(sensor.getPitch(), 2);
+    // Serial.print(" deg | Accel X : ");
+    // Serial.print(sensor.getAccelX(), 2);
+    // Serial.println(" m/s²");
+    // Serial.print(" deg | Accel Y : ");
+    // Serial.print(sensor.getAccelY(), 2);
+    // Serial.println(" m/s²");
+    // Serial.print(" deg | Accel Z : ");
+    // Serial.print(sensor.getAccelZ(), 2);
+    // Serial.println(" m/s²");
 }
