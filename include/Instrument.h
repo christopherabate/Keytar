@@ -1,9 +1,8 @@
 #pragma once
 
+#include "Address.h"
 #include "Adapters/DoubleBanksNoteButtons.h"
 #include "Adapters/InstrumentSelectorCallback.h"
-
-inline int eeprom = 0;
 
 /**
  * @brief   Represents a single row of MIDI note buttons with a starting note.
