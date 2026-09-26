@@ -59,7 +59,7 @@ public:
         } else {
             boosting = false;
             // Gradual decay when not boosting
-            brightness = (brightness * 9) / 10;
+            brightness = (brightness * 7.5) / 10;
         }
 
         FastLED.setBrightness(brightness);
@@ -78,7 +78,7 @@ private:
 
     bool boosting = false;                          ///< True if a boost is in progress
     unsigned long time = 0;                         ///< Timestamp when boost started
-    static constexpr unsigned long duration = 250; ///< Duration of the boost in milliseconds
+    static constexpr unsigned long duration = 100; ///< Duration of the boost in milliseconds
 };
 
 /**
