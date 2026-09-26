@@ -91,8 +91,8 @@ void setup() {
     // Sensor
     //sensor.begin();
     // Whammy and softpot
-    for (auto &whammy : whammys) whammy.map(boundaries<500, 700, 8192, 0>);
-    for (auto &softpot : softpots) softpot.map(boundaries<5350, 10000, 8192, 16384>);
+    for (auto &whammy : whammys) whammy.map(boundaries<550, 800, 8192, 0>);
+    for (auto &softpot : softpots) softpot.map(boundaries<5350, 10000, 8192, 16383>);
     // Set velocity
     std::apply([](auto&... key){ (key.setVelocity(99), ...); }, head.keys);
     std::apply([](auto&... key){ (key.setVelocity(99), ...); }, body.keys);
