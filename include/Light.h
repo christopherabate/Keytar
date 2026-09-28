@@ -33,12 +33,13 @@ public:
      * Stores the current brightness and marks the boost as active.
      * Intended to be called when an external event occurs (e.g., a button press).
      * 
-     * @param velocity  Value representing intensity of the event (currently unused in calculation).
+     * @param note  Value representing the note height.
      */
-    void boost(uint8_t velocity) {
+    void boost(uint8_t note) {
         boosting = true;
         time = millis();                      // Memorize the start time of the boost
         boostStartBrightness = brightness;    // Memorize the current brightness
+        fill_solid(leds, NUM_LEDS, CHSV(map(note, 24, 107, 0, 255), 64, 255)); // Change color according to the note height
     }
 
     /**
@@ -59,7 +60,7 @@ public:
         } else {
             boosting = false;
             // Gradual decay when not boosting
-            brightness = (brightness * 7.5) / 10;
+            brightness = (brightness * 9) / 10;
         }
 
         FastLED.setBrightness(brightness);

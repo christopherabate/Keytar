@@ -68,26 +68,22 @@ public:
         for (auto &button : buttons) {
             Button::State state = button.update();
 
+            MIDIAddress address = channel_address.getActiveAddress()
+                + RelativeMIDIAddress(note_address.getActiveAddress().getAddress() - channel_address.getActiveAddress().getAddress())
+                + offset;
+
             if (state == Button::Falling) {
                 if (!activeButtons) {
                     channel_address.lock();
                     note_address.lock();
                 }
 
-                sender.sendOn(
-                    channel_address.getActiveAddress()
-                    + RelativeMIDIAddress(note_address.getActiveAddress().getAddress() - channel_address.getActiveAddress().getAddress())
-                    + offset
-                );
+                sender.sendOn(address);
 
                 activeButtons++;
 
             } else if (state == Button::Rising) {
-                sender.sendOff(
-                    channel_address.getActiveAddress()
-                    + RelativeMIDIAddress(note_address.getActiveAddress().getAddress() - channel_address.getActiveAddress().getAddress())
-                    + offset
-                );
+                sender.sendOff(address);
 
                 activeButtons--;
 
@@ -97,7 +93,7 @@ public:
                 }
             }
 
-            if (state == Button::Pressed) light.boost(sender.getVelocity());
+            if (state == Button::Pressed) light.boost(address.getAddress());
 
             offset += incrementAddress;
         }
