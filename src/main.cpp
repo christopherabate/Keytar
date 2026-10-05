@@ -35,7 +35,7 @@ Control controls[] = {
     {{8, 9}, mux_1.pin(14), MIDI_CC::Sound_Controller_5, "Filter"},
     {{6, 7}, mux_1.pin(15), MIDI_CC::Effects_1, "Reverb"},
     {{10, 11}, mux_1.pin(13), MIDI_CC::Effects_4, "Delay"},
-    {{4, 5}, mux_1.pin(0), MIDI_CC::Effects_3, "Chorus"},
+    {{4, 5}, mux_1.pin(0), MIDI_CC::Channel_Volume, "Volume"},
 };
 
 Effect effects[] = {
@@ -86,16 +86,17 @@ analog_t boundaries(analog_t raw){ return map(constrain(raw, MIN, MAX), MIN, MAX
 void setup() {
     Serial.begin(115200);
     Control_Surface.begin();
+
     // Init light
     light.begin();
+
     // Sensor
     //sensor.begin();
+
     // Whammy and softpot
     for (auto &whammy : whammys) whammy.map(boundaries<550, 800, 8192, 0>);
     for (auto &softpot : softpots) softpot.map(boundaries<5350, 10000, 8192, 16383>);
-    // Set velocity
-    std::apply([](auto&... key){ (key.setVelocity(99), ...); }, head.keys);
-    std::apply([](auto&... key){ (key.setVelocity(99), ...); }, body.keys);
+
     // Init display
     display.attachInstrument(head);
     display.attachInstrument(body);
@@ -103,6 +104,10 @@ void setup() {
 }
 
 void loop() {
+    // Set random velocity
+    std::apply([](auto&... key){ (key.setVelocity(random(60, 68)), ...); }, head.keys);
+    std::apply([](auto&... key){ (key.setVelocity(random(56, 64)), ...); }, body.keys);
+    
     Control_Surface.loop();
     display.startup();
     display.main();

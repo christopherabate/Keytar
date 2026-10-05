@@ -46,11 +46,11 @@ public:
             if (OFFSET > -SCREEN_H) {
                 // Draw moving image for startup animation
                 u8g2.drawXBMP(0, OFFSET, SCREEN_W, SCREEN_H, keytar_img);
-                OFFSET -= 5; // fixed vertical step per frame
+                OFFSET -= 3; // fixed vertical step per frame
             } else {
                 // Draw splash screen for 2 seconds after animation completes
                 u8g2.drawXBMP(0, 0, SCREEN_W, SCREEN_H, splashscreen_img);
-                if (start - timer > 3000) started = true; // mark startup as finished
+                if (start - timer > 5000) started = true; // mark startup as finished
             }
 
             u8g2.sendBuffer();
